@@ -274,8 +274,9 @@ okBtn.addEventListener("click", () => {
 stayBtn.addEventListener("click", dealerTurn);
 
 function startNewGame() {
+  document.getElementById("overlay").style.display = "none";
+  player.chips = 250;
   newHand();
-  player.chips = 250
   startGame();
 }
 newGameBtn.addEventListener("click", startNewGame);
