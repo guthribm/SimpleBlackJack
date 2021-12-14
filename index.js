@@ -31,8 +31,7 @@ let winner = "";
 
 function gameOver() {
   document.getElementById("overlay").style.display = "flex";
-  document.getElementById("modal-message").textContent =
-    "You are out of chips. Game Over..";
+  modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><button class="btn" onclick="startNewGame()">NEW GAME</button>`;
   document.getElementById("new-deck").textContent = "New Game";
   console.log("Game Over");
 }
