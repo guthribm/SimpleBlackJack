@@ -31,7 +31,7 @@ let winner = "";
 
 function gameOver() {
   document.getElementById("overlay").style.display = "flex";
-  modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><button class="btn" onclick="startNewGame()">NEW GAME</button>`;
+  modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><br><button class="btn" onclick="startNewGame()">NEW GAME</button>`;
   document.getElementById("new-deck").textContent = "New Game";
   console.log("Game Over");
 }
@@ -53,11 +53,21 @@ function getDeckId() {
     .then(dealStartingCards);
 }
 
+function reshuffleCards() {
+  fetch(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`);
+}
+
 function dealStartingCards() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=4`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(`startingcards(): ${data.cards}`);
+      if (data.remaining < 6) {
+        console.log(`FEW CARDS remaining: ${data.remaining}`);
+        console.log("before " + deckId);
+        reshuffleCards();
+      }
+      console.log("after " + deckId);
+      console.log(`RESHUFFLED DECK: ${data.remaining}`);
       dealerCardsArray.push(data.cards[0], data.cards[1]);
       playerCardsArray.push(data.cards[2], data.cards[3]);
       renderGame(playerCardsArray, dealerCardsArray);
@@ -69,6 +79,20 @@ function dealStartingCards() {
       console.log(`player start: ${playerSum} dealer start: ${dealerSum}`);
     });
 }
+
+// function checkCardRemaining() {
+//   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=4`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//       if (data.remaining < 6) {
+//         console.log(`FEW CARDS remaining: ${data.remaining}`);
+//         console.log("before " + deckId);
+//         newHand();
+//         startGame();
+//       }
+//       console.log("after " + deckId);
+//     });
+// }
 
 function dealSingleCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
@@ -129,13 +153,17 @@ function newHand() {
   dealerCardsArray = [];
 }
 
+function playerDraw() {
+  modal.innerHTML = `<h2 id="modal-message">Draw!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  document.getElementById("overlay").style.display = "flex";
+}
+
 function playerWins() {
   modal.innerHTML = `<h2 id="modal-message">You Win!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
   player.chips += 50;
   updateChips();
-  // toggleOKOn();
 }
 
 function playerLoses() {
@@ -144,7 +172,6 @@ function playerLoses() {
   winner = "Dealer";
   player.chips -= 50;
   updateChips();
-  // toggleOKOn();
 }
 
 function dealerTurn() {
@@ -168,8 +195,7 @@ function checkWinner() {
     playerMessage.textContent = "Dealer got BlackJack!";
     playerLoses();
   } else if (dlr === plyr) {
-    playerMessage.textContent = "Draw";
-    winner = "No one";
+    playerDraw();
   } else if (dlr > plyr && dlr < 22) {
     playerLoses();
     // toggleOK();
@@ -197,9 +223,9 @@ function dealerTakeCard() {
 function dealerTurn() {
   let dealer = getDealerSum();
   let player = getPlayerSum();
-  if (dealer < player) {
+  if (dealer <= player && dealer != 21) {
     dealerTakeCard();
-  } else if (dealer > player && dealer < 22) {
+  } else {
     checkWinner();
   }
 }
