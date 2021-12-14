@@ -125,7 +125,7 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 2rem 0;
-  background-image: url("/images/table.png");
+  background-image: url("https://raw.githubusercontent.com/guthribm/SimpleBlackJack/main/images/table.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
