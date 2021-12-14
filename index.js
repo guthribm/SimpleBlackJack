@@ -276,6 +276,7 @@ stayBtn.addEventListener("click", dealerTurn);
 
 function startNewGame() {
   newHand();
+  player.chips = 250
   startGame();
 }
 newGameBtn.addEventListener("click", startNewGame);
