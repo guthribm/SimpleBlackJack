@@ -92,7 +92,7 @@ img {
   flex-flow: column wrap;
   align-items: center;
   background-color: rgba(60, 60, 60, 0.9);
-  padding: 4rem;
+  padding: 2rem 4rem;
   border-radius: 12px;
   max-width: 600px;
   text-align: center;
@@ -123,8 +123,8 @@ img {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  align-items: center;
-  padding: 2rem 0;
+  /* align-items: center; */
+  padding: 0;
   background-image: url("https://raw.githubusercontent.com/guthribm/SimpleBlackJack/main/images/table.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -145,6 +145,7 @@ img {
 
 #dealer-container {
   width: 100%;
+  margin: 0 auto 1rem;
 }
 
 #player-container {
@@ -265,9 +266,9 @@ img {
   justify-content: center;
 }
 
-/* * {
+* {
   border: 1px solid red;
-} */
+}
 
 .btn {
   padding: 0.5rem 1rem;
