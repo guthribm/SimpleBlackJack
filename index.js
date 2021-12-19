@@ -80,19 +80,6 @@ function dealStartingCards() {
     });
 }
 
-// function checkCardRemaining() {
-//   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=4`)
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data.remaining < 6) {
-//         console.log(`FEW CARDS remaining: ${data.remaining}`);
-//         console.log("before " + deckId);
-//         newHand();
-//         startGame();
-//       }
-//       console.log("after " + deckId);
-//     });
-// }
 
 function dealSingleCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
@@ -231,13 +218,13 @@ function dealerTurn() {
 }
 
 function toggleOKOn() {
-  okBtn.style.visibility = "visible";
+  okBtn.style.display = "block";
   dealCard.style.visibility = "hidden";
   stayBtn.style.visibility = "hidden";
 }
 
 function toggleOKOff() {
-  okBtn.style.visibility = "hidden";
+  okBtn.style.display = "none";
   dealCard.style.visibility = "visible";
   stayBtn.style.visibility = "visible";
 }

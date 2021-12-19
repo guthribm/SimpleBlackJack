@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- #############  Google Fonts  ############# -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+     <!-- #############  CSS Styles  ############# -->
     <link rel="stylesheet" href="styles/styles.css" />
     <title>Simple BlackJack Game</title>
   </head>
+
   <body id="root">
     <div id="overlay">
       <div id="modal">
@@ -24,13 +27,13 @@
         </button>
       </div>
     </div>
-    <main>
-      <button class="btn" id="ok-btn">OK</button>
+    <main>      
+       <!-- #############  Navbar  ############# -->
       <nav>
         <button id="nav-btn" class="btn nav-btn">NEW GAME</button>
         <p id="player-name">CHIPS: $0</p>
       </nav>
-
+       <!-- #############  Middle Section  ############# -->
       <section id="middle-section">
         <div class="container" id="dealer-container">
           <div id="dealer-sum" class="card-sum"></div>
@@ -44,11 +47,16 @@
         </div>
       </section>
 
-      <h2 id="player-message"></h2>
+       <!-- #############  Buttons Container  ############# -->      
       <div id="buttons-container">
-        <button class="btn bottom-btn" id="draw-card">Hit Me!</button>
-        <button class="btn bottom-btn" id="stay-btn">Stay</button>
+        <h2 id="player-message"></h2>
+        <div id="buttons">
+          <button class="btn bottom-btn" id="draw-card">Hit Me!</button>
+          <button class="btn bottom-btn" id="stay-btn">Stay</button>
+        </div>
+        
       </div>
+      <button class="btn" id="ok-btn">OK</button>
     </main>
     <script src="index.js"></script>
   </body>

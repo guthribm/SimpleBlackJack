@@ -6,6 +6,7 @@
 ::before,
 ::after {
   box-sizing: border-box;
+  /* border: 1px solid red; */
 }
 
 html,
@@ -24,52 +25,37 @@ h3 {
 body {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  /* height: 100vh; */
+  justify-content: center;
+  align-items: center;
   background-color: #333;
-  padding: 0.5rem 0;
+  padding: 0;
+  margin: 0;
 }
 
 main {
-  background-color: #eee;
-  width: 95%;
-  max-width: 600px;
-  height: 95vh;
-  max-height: 1000px;
-  display: grid;
-  grid-template-rows: 10% 70% 10% 10%;
-  grid-template-areas: "nav" "middle" "text" "buttons";
+  background-color: #eee;  
+  max-width: 600px;  
+  max-height: 900px;
   margin: 0 auto;
-  padding: 1rem;
-  /* border-color: blue;
-  border-width: 4px; */
-}
-
-nav {
+  padding: 1rem;  
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 60px;
-  background-color: #eee;
-  padding: 1rem 0.5rem;
-  /* position: fixed;
-  top: 0;
-  margin: 0 auto 2rem; */
-  grid-area: nav;
 }
 
 img {
-  height: 120px;
-  width: calc(120px * 5 / 7);
+  
+  max-width: 35%;  
   padding: 0;
   margin: 0.5rem;
-  margin-right: -3rem;
-  /* position: relative; */
+  margin-right: -3rem; 
   right: 1.5rem;
   display: flex;
   z-index: 3;
 }
+
+/* #############  Modal  ############# */
 
 #overlay {
   display: flex;
@@ -118,53 +104,116 @@ img {
   border-color: #941600;
 }
 
+
+
+/* #############  NavBar  ############# */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: #eee;
+  padding: 1rem 0.5rem; 
+  grid-area: nav;
+}
+
+
+#nav-btn {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 0.25rem;
+  font-size: 1rem;  
+  box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 100, 100, 0.6);
+  transition: 0.35s;
+  margin: 0;
+  margin-right: auto;
+}
+
+.nav-btn:hover,
+.nav-btn:focus {
+  box-shadow: 0 0 #fff;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+/* #############  Middle Section  ############# */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+ 
+}
+
 #middle-section {
   grid-area: middle;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
-  /* align-items: center; */
+  justify-content: space-between; 
   padding: 0;
   background-image: url("https://raw.githubusercontent.com/guthribm/SimpleBlackJack/main/images/table.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
 }
+
+.cards-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.card-sum {
+  padding: 0.5rem;
+  color: white;
+  width: 100%;
+  font-size: 1.5rem;  
+  height: 40%;
+  display: inline-block;
+  box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
+  
+}
+
+
+/* #############  Dealer  ############# */
 
 #dealer-cards {
   justify-content: flex-end;
   width: 60%;
 }
 
+#dealer-sum {
+  background: #c42918;  
+  text-align: left;
+  padding-left: 2rem;
+ 
+}
+
+#dealer-cards .card-image {
+  box-shadow: 0px 0px 3px 3px rgba(100, 21, 12, 0.7);
+  border-radius: 5px;
+}
+
+
+/* #############  Player  ############# */
+
+
+
 #player-cards {
   justify-content: flex-start;
   width: 60%;
   right: 2rem;
-}
-
-#dealer-container {
-  width: 100%;
-  margin: 0 auto 1rem;
-}
-
-#player-container {
-  width: 100%;
-}
-
-#player-message {
-  padding: 1rem;
-  background: #eee;
-  text-align: center;
-  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
-  width: 80%;
-  border-radius: 12px;
-  margin: 1rem auto;
-  grid-area: text;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
 }
 
 #player-name {
@@ -179,8 +228,6 @@ img {
   background: #0e5dc4;
   text-align: right;
   padding-right: 2rem;
-  position: relative;
-  bottom: 4rem;
 }
 
 #player-cards .card-image {
@@ -188,41 +235,40 @@ img {
   border-radius: 5px;
 }
 
-#dealer-sum {
-  background: #c42918;
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding-left: 2rem;
-  position: relative;
-  top: 4rem;
-}
 
-#dealer-cards .card-image {
-  box-shadow: 0px 0px 3px 3px rgba(100, 21, 12, 0.7);
-  border-radius: 5px;
-}
+/* #############  Buttons Section  ############# */
 
-.card-sum {
-  padding: 0.5rem;
-  color: white;
-  width: 100%;
-  font-size: 1.5rem;
-  /* position: relative; */
-  height: 40%;
-  display: block;
-  box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
-}
-
-#buttons-container {
-  grid-area: buttons;
+#buttons-container { 
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
 }
 
+#buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+#player-message {
+  grid-area: message;
+  padding: .5rem 1rem;
+  background: #eee;
+  text-align: center;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
+  width: 80%;
+  border-radius: 12px;
+  margin: 1rem auto;  
+  display: block;
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+}
+
 #draw-card {
+  grid-area: button1;
   visibility: hidden;
   background: #02783a;
   max-width: 150px;
@@ -238,6 +284,7 @@ img {
 }
 
 #stay-btn {
+  grid-area: button2;
   visibility: hidden;
   background: #eee;
   max-width: 150px;
@@ -254,23 +301,11 @@ img {
 }
 
 #ok-btn {
-  visibility: hidden;
+  display: none;
 }
-
-.cards-container {
-  position: relative;
-  display: flex;
-  width: 100%;
-  padding: 0 1rem;
-  align-items: center;
-  justify-content: center;
-}
-/* 
-* {
-  border: 1px solid red;
-} */
 
 .btn {
+  margin: 0 auto;
   padding: 0.5rem 1rem;
   border: 2px solid transparent;
   border-radius: 12px;
@@ -285,53 +320,34 @@ img {
 }
 
 .bottom-btn {
-  width: 40vw;
+  max-width: 150px;
   transition: 0.35s;
+  margin: 0 1rem;
 }
 
-.nav-btn {
-  padding: 0.25rem;
-  font-size: 16px;
-  width: 120px;
-  height: 2rem;  
-  box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(100, 100, 100, 0.6);
-  transition: 0.35s;
-}
 
-.nav-btn:hover,
-.nav-btn:focus {
-  box-shadow: 0 0 #fff;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
+/* #############  Media Queries Mobile View  ############# */
 
 @media (max-width: 450px) {
+
+  html {
+    font-size: 12px;
+  }
+
   #player-name {
     font-size: 1.5rem;
   }
 
   #player-message {
-    margin: 0 auto;
-    font-size: 20px;
-  }
-
-  #player-sum,
-  #dealer-sum {
-    padding: 1rem;
-    margin: 0 0.25rem;
+    
     font-size: 1rem;
   }
 
-  main {
-    padding: 0 1rem;
+  .btn {
+    font-size: 1rem;
+  }
+
+  .container {
+    margin: 2rem auto;
   }
 }
