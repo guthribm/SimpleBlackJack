@@ -80,7 +80,6 @@ function dealStartingCards() {
     });
 }
 
-
 function dealSingleCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then((res) => res.json())
@@ -92,7 +91,7 @@ function dealSingleCard() {
 
 function startGame() {
   getDeckId();
-  document.getElementById("main").style.display = "flex"
+  document.getElementById("main").style.display = "grid";
   renderGame(playerCardsArray, dealerCardsArray);
 }
 
@@ -185,11 +184,10 @@ function checkWinner() {
   } else if (dlr === plyr) {
     playerDraw();
   } else if (dlr > plyr && dlr < 22) {
-    playerLoses();    
+    playerLoses();
   } else {
     playerWins();
   }
- 
 }
 
 function dealerTakeCard() {
@@ -285,9 +283,18 @@ okBtn.addEventListener("click", () => {
 stayBtn.addEventListener("click", dealerTurn);
 
 function startNewGame() {
-  document.getElementById("overlay").style.display = "none";  
+  document.getElementById("overlay").style.display = "none";
   player.chips = 250;
   newHand();
   startGame();
 }
-newGameBtn.addEventListener("click", startNewGame);
+
+function cancelNewGame() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function confirmNewGame() {
+  modal.innerHTML = `<h2 id="modal-message">Would you like to start a new game?</h2><div class="buttons"><button onclick="startNewGame()" class="btn" id="confirm">YES</button><button class="btn" onclick="cancelNewGame()">NO</button></div>`;
+  document.getElementById("overlay").style.display = "flex";
+}
+newGameBtn.addEventListener("click", confirmNewGame);
