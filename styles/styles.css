@@ -1,9 +1,9 @@
 :root {
   --main-font: "Roboto", sans-serif;
-  --dark-primary: #0b4619;
-  --dark-secondary: #116530;
-  --accent: #ffcc1d;
-  --primary-light: #e8e8cc;
+  --dark-primary: #232931;
+  --dark-secondary: #393e46;
+  --accent: #4ecca3;
+  --primary-light: #eeeeee;
 }
 
 *,
@@ -28,7 +28,6 @@ h3 {
 
 body {
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   background-color: var(--primary-light);
@@ -56,7 +55,7 @@ img {
   max-width: 100%;
   padding: 0;
   margin: 0.5rem;
-  margin-right: -3rem;
+  margin-right: -2rem;
   right: 1.5rem;
   display: flex;
   z-index: 3;
@@ -75,8 +74,8 @@ img {
   left: 0;
   bottom: 0;
   right: 0;
-  color: white;
-  background-color: rgba(20, 20, 20, 0.2);
+  color: var(--primary-light);
+  background-color: rgba(35, 41, 49, 0.6);
   z-index: 100;
 }
 
@@ -97,10 +96,10 @@ img {
 }
 
 #new-deck {
-  background: #e02401;
+  background: var(--accent);
   transition: 0.35s;
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--dark-primary);
+  color: var(--dark-primary);
 }
 
 #new-deck:hover,
@@ -134,15 +133,17 @@ nav {
   transition: 0.35s;
   margin: 0;
   margin-right: auto;
-  background-color: var(--primary-light);
-  color: var(--dark-primary);
+  background-color: var(--dark-secondary);
+  color: var(--primary-light);
+  border: 2px solid var(--primary-light);
 }
 
 .nav-btn:hover,
 .nav-btn:focus {
   box-shadow: 0 0 var(--primary-light);
-  background: rgba(0, 0, 0, 0.8);
-  color: var(--primary-light);
+  background: var(--primary-light);
+  color: var(--dark-secondary);
+  border-color: var(--dark-secondary);
 }
 
 #player-name {
@@ -182,7 +183,7 @@ nav {
 }
 
 .card-image {
-  max-width: 35%;
+  max-width: 25%;
 }
 
 .card-sum {
@@ -209,7 +210,7 @@ nav {
 }
 
 #dealer-cards .card-image {
-  box-shadow: -5px 5px 0px #c42918;
+  box-shadow: -5px 0px 3px rgba(196, 41, 24, 0.5);
   border-radius: 5px;
 }
 
@@ -238,7 +239,7 @@ nav {
 
 #player-cards .card-image {
   border-radius: 5px;
-  box-shadow: -5px 5px 0px #0e5dc4;
+  box-shadow: -5px 0px 3px rgba(14, 93, 196, 0.5);
 }
 
 /* #############  Buttons Section  ############# */
@@ -261,25 +262,23 @@ nav {
 #player-message {
   grid-area: message;
   padding: 0.5rem 1rem;
-  background: var(--primary-light);
+  background: var(--dark-secondary);
   text-align: center;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
-  width: 80%;
+  border: 2px solid var(--primary-light);
   border-radius: 12px;
   margin: 1rem auto;
-  display: block;
   width: 90%;
   justify-content: center;
   align-items: center;
-  color: var(--dark-primary);
+  color: var(--primary-light);
 }
 
 #draw-card {
   grid-area: button1;
-  visibility: hidden;
-  background: #02783a;
+  background: var(--accent);
   max-width: 150px;
-  color: var(--primary-light);
+  color: var(--dark-primary);
   border-color: var(--primary-light);
 }
 
@@ -293,7 +292,7 @@ nav {
 
 #stay-btn {
   grid-area: button2;
-  visibility: hidden;
+  /* visibility: hidden; */
   background: var(--primary-light);
   max-width: 150px;
   border-color: #c42918;
@@ -343,6 +342,10 @@ nav {
 
   main {
     height: 100vh;
+  }
+
+  .card-image {
+    max-width: 45%;
   }
 
   #player-name {

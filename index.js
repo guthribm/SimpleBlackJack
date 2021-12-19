@@ -21,6 +21,7 @@ let dealerSumEl = document.getElementById("dealer-sum");
 let modal = document.getElementById("modal");
 let confirmBtn = document.getElementById("confirm");
 let newGameBtn = document.getElementById("nav-btn");
+let overlay = document.getElementById("overlay");
 
 let playerSum = 0;
 let dealerSum = 0;
@@ -29,13 +30,15 @@ let isAlive = false;
 let message = "";
 let winner = "";
 
+// Brings up overlay with a message and on the button click starts a new game
 function gameOver() {
-  document.getElementById("overlay").style.display = "flex";
-  modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><br><button class="btn" onclick="startNewGame()">NEW GAME</button>`;
+  overlay.style.display = "flex";
+  modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><br><button class="btn"\
+   onclick="startNewGame()">NEW GAME</button>`;
   document.getElementById("new-deck").textContent = "New Game";
-  console.log("Game Over");
 }
 
+// Changes the chip amount and checks if player is out of chips or not
 function updateChips() {
   playerName.textContent = `CHIPS: $${player.chips}`;
   if (player.chips <= 0) {
@@ -43,6 +46,8 @@ function updateChips() {
   }
 }
 
+// Makes an API call to get a unique deckID from deckofcardsapi.com and assigns it to
+// a global variable "deckID" and calls "dealStartingCards()"
 function getDeckId() {
   fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
     .then((res) => res.json())
@@ -53,33 +58,29 @@ function getDeckId() {
     .then(dealStartingCards);
 }
 
+// Reshuffles deck using current unique ID
 function reshuffleCards() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`);
 }
 
+// Draws 4 cards from deck and checks remaining cards to see if we need a reshuffle. Threshold
+// is less than 6 remaining.
 function dealStartingCards() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=4`)
     .then((res) => res.json())
     .then((data) => {
       if (data.remaining < 6) {
-        console.log(`FEW CARDS remaining: ${data.remaining}`);
-        console.log("before " + deckId);
         reshuffleCards();
       }
-      console.log("after " + deckId);
-      console.log(`RESHUFFLED DECK: ${data.remaining}`);
+      // Two cards each are added to the player and dealer arrays and the main logic "renderGame()" is
+      // called
       dealerCardsArray.push(data.cards[0], data.cards[1]);
       playerCardsArray.push(data.cards[2], data.cards[3]);
       renderGame(playerCardsArray, dealerCardsArray);
-      updateChips();
-      dealerSum =
-        convertValue(data.cards[0].value) + convertValue(data.cards[1].value);
-      playerSum =
-        convertValue(data.cards[2].value) + convertValue(data.cards[3].value);
-      console.log(`player start: ${playerSum} dealer start: ${dealerSum}`);
     });
 }
 
+// Adds a single card to the player array and calls "renderGame()"
 function dealSingleCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then((res) => res.json())
@@ -89,12 +90,17 @@ function dealSingleCard() {
     });
 }
 
+// Gets a new deck, resets player chips, renders the table and cards
 function startGame() {
   getDeckId();
+  player.chips = 250;
   document.getElementById("main").style.display = "grid";
   renderGame(playerCardsArray, dealerCardsArray);
 }
 
+// Takes the value from the API response and converts it to a number. So the tricky part
+// is the Ace, which can be different values depending on the rest of the cards in the
+// hand. This has created some bugs in the gameplay logic, which I am revising..
 function convertValue(value) {
   let cardValue = 0;
   if (value === "KING" || value === "JACK" || value === "QUEEN") {
@@ -112,27 +118,30 @@ function convertValue(value) {
   return cardValue;
 }
 
+// Takes all the cards in the PLAYER array and returns a sum of all the values.
+// This can be refactored with the DealerSum and may also be part of the Ace value
+// problem in the game logic
 function getPlayerSum() {
   let p1Sum = 0;
   let convertedPSum = playerCardsArray.map((item) => item.value);
   for (let item of convertedPSum) {
     p1Sum += convertValue(item);
   }
-  console.log("player 1 sum: " + p1Sum);
   return p1Sum;
 }
 
+// Takes all the cards in the DEALER array and returns a sum of all the values.
 function getDealerSum() {
   let dealerSum = 0;
   let convertedDSum = dealerCardsArray.map((item) => item.value);
   for (let item of convertedDSum) {
     dealerSum += convertValue(item);
   }
-  console.log("get dealer 1 sum: " + dealerSum);
   document.getElementById("dealer-sum").textContent = `Dealer: ${dealerSum}`;
   return dealerSum;
 }
 
+// This function clears the table and clears both arrays of current cards
 function newHand() {
   playerCards.innerHTML = "";
   dealerCards.innerHTML = "";
@@ -140,19 +149,25 @@ function newHand() {
   dealerCardsArray = [];
 }
 
+// Displays a modal message for a draw
 function playerDraw() {
   modal.innerHTML = `<h2 id="modal-message">Draw!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
 }
 
+// Displays a modal message for a win and adds chips. Turnary to check display custom messages
+// for blackJack
 function playerWins() {
-  modal.innerHTML = `<h2 id="modal-message">You Win!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  modal.innerHTML = `<h2 id="modal-message">You Win!${
+    getPlayerSum() === 21 ? "\nBlackJack!" : ""
+  }</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
   player.chips += 50;
   updateChips();
 }
 
+// Displays a modal message for a loss and removes chips.
 function playerLoses() {
   modal.innerHTML = `<h2 id="modal-message">You Lose</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
@@ -161,17 +176,7 @@ function playerLoses() {
   updateChips();
 }
 
-function dealerTurn() {
-  checkWinner();
-  let total = getDealerSum();
-
-  if (total <= getPlayerSum()) {
-    dealerTakeCard();
-  }
-  renderGame(playerCardsArray, dealerCardsArray);
-  checkWinner();
-}
-
+// Compares both hands and determines the winner based on common blackjack rules.
 function checkWinner() {
   let dlr = getDealerSum();
   let plyr = getPlayerSum();
@@ -179,7 +184,6 @@ function checkWinner() {
   if (dlr > 21) {
     playerWins();
   } else if (dlr === 21) {
-    playerMessage.textContent = "Dealer got BlackJack!";
     playerLoses();
   } else if (dlr === plyr) {
     playerDraw();
@@ -190,6 +194,7 @@ function checkWinner() {
   }
 }
 
+// Draws one card from the API deck and adds it to the DEALER array then checks for winner
 function dealerTakeCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then((res) => res.json())
@@ -197,12 +202,11 @@ function dealerTakeCard() {
       dealerCardsArray.push(data.cards[0]);
       renderGame(playerCardsArray, dealerCardsArray);
       checkWinner();
-    })
-    .then(
-      console.log(`dealerArray: ${dealerCardsArray}\ndealer sum: ${dealerSum}`)
-    );
+    });
 }
 
+// Checks if (dealer <= player) and dealer is not 21, the dealer will draw one card
+// and check for the winner.
 function dealerTurn() {
   let dealer = getDealerSum();
   let player = getPlayerSum();
@@ -213,18 +217,33 @@ function dealerTurn() {
   }
 }
 
-function toggleOKOn() {
-  okBtn.style.display = "block";
-  dealCard.style.visibility = "hidden";
-  stayBtn.style.visibility = "hidden";
+// Resets the table and both arrays, gets a new deck and deals new starting cards
+function startNewGame() {
+  overlay.style.display = "none";
+  updateChips();
+  newHand();
+  startGame();
 }
 
-function toggleOKOff() {
-  okBtn.style.display = "none";
-  dealCard.style.visibility = "visible";
-  stayBtn.style.visibility = "visible";
+// Closes the modal overlay
+function cancelNewGame() {
+  overlay.style.display = "none";
 }
 
+// Displays message asking if the player wants to reset and start a new game or not
+function confirmNewGame() {
+  modal.innerHTML = `<h2 id="modal-message">Would you like to start a new game?</h2><div class="buttons"><button onclick="startNewGame()" class="btn" id="confirm">YES</button><button class="btn" onclick="cancelNewGame()";">NO</button></div>`;
+  overlay.style.display = "flex";
+}
+
+// Clears the modal overlay, clears the table and both arrays, deals starting cards
+function confirmHandler() {
+  overlay.style.display = "none";
+  newHand();
+  dealStartingCards();
+}
+
+// ------------------  MAIN GAME LOGIC  ---------------------
 function renderGame(playerArr, dealerArr) {
   playerCards.innerHTML = "";
   dealerCards.innerHTML = "";
@@ -255,46 +274,25 @@ function renderGame(playerArr, dealerArr) {
   }
 }
 
-function confirmHandler() {
-  console.log("confirm handler clicked");
-  toggleOKOff();
-  document.getElementById("overlay").style.display = "none";
-  newHand();
-  dealStartingCards();
-}
-
+// Event listener for the initial Welcome Screen modal, dismisses screen and starts game
 newDeck.addEventListener("click", () => {
-  newDeck.style.visibility = "hidden";
-  dealCard.style.visibility = "visible";
-  stayBtn.style.visibility = "visible";
-  document.getElementById("overlay").style.display = "none";
+  overlay.style.display = "none";
   dealStartingCards;
 });
 
+// Deals single card to player
 dealCard.addEventListener("click", dealSingleCard);
 
+// After winner is determined, OK will clear the board and both arrays, deal starting
+// cards and then prompt the player for another card
 okBtn.addEventListener("click", () => {
-  toggleOKOff();
   newHand();
   dealStartingCards();
   playerMessage.textContent = "Would you like to draw another card?";
 });
 
+// Hitting the stay button will switch turns to the dealer
 stayBtn.addEventListener("click", dealerTurn);
 
-function startNewGame() {
-  document.getElementById("overlay").style.display = "none";
-  player.chips = 250;
-  newHand();
-  startGame();
-}
-
-function cancelNewGame() {
-  document.getElementById("overlay").style.display = "none";
-}
-
-function confirmNewGame() {
-  modal.innerHTML = `<h2 id="modal-message">Would you like to start a new game?</h2><div class="buttons"><button onclick="startNewGame()" class="btn" id="confirm">YES</button><button class="btn" onclick="cancelNewGame()">NO</button></div>`;
-  document.getElementById("overlay").style.display = "flex";
-}
+// Clicking new game button will ask to confirm starting a new game
 newGameBtn.addEventListener("click", confirmNewGame);
