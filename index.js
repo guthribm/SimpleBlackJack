@@ -92,6 +92,7 @@ function dealSingleCard() {
 
 function startGame() {
   getDeckId();
+  document.getElementById("main").style.display = "flex"
   renderGame(playerCardsArray, dealerCardsArray);
 }
 
@@ -184,14 +185,11 @@ function checkWinner() {
   } else if (dlr === plyr) {
     playerDraw();
   } else if (dlr > plyr && dlr < 22) {
-    playerLoses();
-    // toggleOK();
-    // resetBoard();
+    playerLoses();    
   } else {
     playerWins();
   }
-  // playerMessage.textContent = `\n${winner} WINS!\n`;
-  // toggleOKOn();
+ 
 }
 
 function dealerTakeCard() {
@@ -287,7 +285,7 @@ okBtn.addEventListener("click", () => {
 stayBtn.addEventListener("click", dealerTurn);
 
 function startNewGame() {
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("overlay").style.display = "none";  
   player.chips = 250;
   newHand();
   startGame();

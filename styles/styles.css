@@ -24,18 +24,19 @@ h3 {
 
 body {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   background-color: #333;
   padding: 0;
   margin: 0;
+  height: 100vh;
 }
 
 main {
   background-color: #eee;  
-  max-width: 600px;  
-  max-height: 900px;
+  /* max-width: 600px;  
+  max-height: 900px; */
   margin: 0 auto;
   padding: 1rem;  
   display: flex;
@@ -44,9 +45,13 @@ main {
   align-items: center;
 }
 
+#main {
+  display: none;
+}
+
 img {
   
-  max-width: 35%;  
+  max-width: 100%;  
   padding: 0;
   margin: 0.5rem;
   margin-right: -3rem; 
@@ -114,9 +119,10 @@ nav {
   align-items: center;
   width: 100%;
   height: 60px;
-  background-color: #eee;
+  background-color: rgb(255, 156, 7);
   padding: 1rem 0.5rem; 
-  grid-area: nav;
+  margin-bottom: 1rem;
+  
 }
 
 
@@ -124,7 +130,7 @@ nav {
   display: flex;
   align-items: center;
   justify-items: center;
-  padding: 0.25rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;  
   box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(100, 100, 100, 0.6);
@@ -137,6 +143,10 @@ nav {
 .nav-btn:focus {
   box-shadow: 0 0 #fff;
   background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+#player-name {
   color: #fff;
 }
 
@@ -173,6 +183,9 @@ nav {
   justify-content: center;
 }
 
+.card-image {
+  max-width: 45%;
+}
 
 .card-sum {
   padding: 0.5rem;
@@ -180,9 +193,7 @@ nav {
   width: 100%;
   font-size: 1.5rem;  
   height: 40%;
-  display: inline-block;
-  box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.25);
-  
+  display: inline-block;  
 }
 
 
@@ -191,17 +202,18 @@ nav {
 #dealer-cards {
   justify-content: flex-end;
   width: 60%;
+  
 }
 
 #dealer-sum {
   background: #c42918;  
-  text-align: left;
+  text-align: right;
   padding-left: 2rem;
- 
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.25);
 }
 
 #dealer-cards .card-image {
-  box-shadow: 0px 0px 3px 3px rgba(100, 21, 12, 0.7);
+  box-shadow: -5px 5px 0px #c42918;
   border-radius: 5px;
 }
 
@@ -214,6 +226,7 @@ nav {
   justify-content: flex-start;
   width: 60%;
   right: 2rem;
+  
 }
 
 #player-name {
@@ -226,13 +239,15 @@ nav {
 
 #player-sum {
   background: #0e5dc4;
-  text-align: right;
+  text-align: left;
   padding-right: 2rem;
+  box-shadow: 0px -5px 6px rgba(0, 0, 0, 0.25);
 }
 
 #player-cards .card-image {
-  box-shadow: 0px 0px 3px 3px rgba(6, 54, 117, 0.7);
+  
   border-radius: 5px;
+  box-shadow: -5px 5px 0px #0e5dc4
 }
 
 
@@ -320,7 +335,8 @@ nav {
 }
 
 .bottom-btn {
-  max-width: 150px;
+  width: 40vw;
+  max-width: 200px;
   transition: 0.35s;
   margin: 0 1rem;
 }
@@ -332,6 +348,10 @@ nav {
 
   html {
     font-size: 12px;
+  }
+
+  main {
+    height: 100vh;
   }
 
   #player-name {
@@ -346,8 +366,5 @@ nav {
   .btn {
     font-size: 1rem;
   }
-
-  .container {
-    margin: 2rem auto;
-  }
+  
 }
