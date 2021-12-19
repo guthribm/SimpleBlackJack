@@ -35,7 +35,6 @@ function gameOver() {
   overlay.style.display = "flex";
   modal.innerHTML = `<h2>You are out of chips. Game Over..</h2><br><button class="btn"\
    onclick="startNewGame()">NEW GAME</button>`;
-  document.getElementById("new-deck").textContent = "New Game";
 }
 
 // Changes the chip amount and checks if player is out of chips or not
@@ -220,6 +219,7 @@ function dealerTurn() {
 // Resets the table and both arrays, gets a new deck and deals new starting cards
 function startNewGame() {
   overlay.style.display = "none";
+  player.chips = 250;
   updateChips();
   newHand();
   startGame();
