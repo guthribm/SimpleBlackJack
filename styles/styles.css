@@ -77,6 +77,7 @@ img {
   color: var(--primary-light);
   background-color: rgba(35, 41, 49, 0.6);
   z-index: 100;
+  padding: 1rem;
 }
 
 #modal {
