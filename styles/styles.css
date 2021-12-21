@@ -47,9 +47,9 @@ main {
     0px 0px 10px 5px rgba(100, 100, 100, 0.3);
 }
 
-#main {
+/* #main {
   display: none;
-}
+} */
 
 img {
   max-width: 100%;
@@ -184,7 +184,7 @@ nav {
 }
 
 .card-image {
-  max-width: 35%;
+  width: 75px;
 }
 
 .card-sum {
@@ -345,9 +345,9 @@ nav {
     height: 100vh;
   }
 
-  .card-image {
+  /* .card-image {
     max-width: 45%;
-  }
+  } */
 
   #player-name {
     font-size: 1.5rem;
