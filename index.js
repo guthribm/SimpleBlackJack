@@ -97,15 +97,38 @@ function startGame() {
   renderGame(playerCardsArray, dealerCardsArray);
 }
 
+function checkAces(arr) {
+  let aceCount = 0;
+  for (item of arr) {
+    if (item === "ACE") {
+      aceCount++;
+    }
+  }
+  return aceCount;
+}
+
+function checkSuits(value) {
+  let cardValue;
+  if (value === "KING" || value === "JACK" || value === "QUEEN") {
+    cardValue = 10;
+  } else {
+    cardValue = value;
+  }
+  return cardValue;
+}
+
 // Takes the value from the API response and converts it to a number. So the tricky part
 // is the Ace, which can be different values depending on the rest of the cards in the
 // hand. This has created some bugs in the gameplay logic, which I am revising..
-function convertValue(value) {
+function convertValue(value, arr) {
+  let otherCards = arr
+    .filter((item) => item != "ACE")
+    .map((item) => checkSuits(item));
   let cardValue = 0;
   if (value === "KING" || value === "JACK" || value === "QUEEN") {
     cardValue = 10;
   } else if (value === "ACE") {
-    if (playerSum < 11) {
+    if (checkAces(arr) <= 1 && otherCards.reduce((a, b) => a + b, 0) < 11) {
       cardValue = 11;
     } else {
       cardValue = 1;
@@ -113,7 +136,6 @@ function convertValue(value) {
   } else {
     cardValue = parseInt(value);
   }
-
   return cardValue;
 }
 
@@ -124,7 +146,7 @@ function getPlayerSum() {
   let p1Sum = 0;
   let convertedPSum = playerCardsArray.map((item) => item.value);
   for (let item of convertedPSum) {
-    p1Sum += convertValue(item);
+    p1Sum += convertValue(item, convertedPSum);
   }
   return p1Sum;
 }
@@ -134,7 +156,7 @@ function getDealerSum() {
   let dealerSum = 0;
   let convertedDSum = dealerCardsArray.map((item) => item.value);
   for (let item of convertedDSum) {
-    dealerSum += convertValue(item);
+    dealerSum += convertValue(item, convertedDSum);
   }
   document.getElementById("dealer-sum").textContent = `Dealer: ${dealerSum}`;
   return dealerSum;
@@ -157,9 +179,11 @@ function playerDraw() {
 // Displays a modal message for a win and adds chips. Turnary to check display custom messages
 // for blackJack
 function playerWins() {
-  modal.innerHTML = `<h2 id="modal-message">You Win!${
-    getPlayerSum() === 21 ? "\nBlackJack!" : ""
-  }</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  modal.innerHTML = `<h2 id="modal-message">${
+    getPlayerSum() === 21
+      ? "You got a <span class='got-blackjack'>BlackJack!</span>\n"
+      : ""
+  }You Win!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
   player.chips += 50;

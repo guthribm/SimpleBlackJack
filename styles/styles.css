@@ -96,6 +96,11 @@ img {
   text-transform: uppercase;
 }
 
+.got-blackjack {
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
 #new-deck {
   background: var(--accent);
   transition: 0.35s;
