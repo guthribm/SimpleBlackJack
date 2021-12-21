@@ -183,7 +183,7 @@ function playerWins() {
     getPlayerSum() === 21
       ? "You got a <span class='got-blackjack'>BlackJack!</span>\n"
       : ""
-  }You Win!</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  }You Win! 🙂</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
   player.chips += 50;
@@ -192,7 +192,7 @@ function playerWins() {
 
 // Displays a modal message for a loss and removes chips.
 function playerLoses() {
-  modal.innerHTML = `<h2 id="modal-message">You Lose</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  modal.innerHTML = `<h2 id="modal-message">You Lose 😥</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = "Dealer";
   player.chips -= 50;
@@ -287,14 +287,11 @@ function renderGame(playerArr, dealerArr) {
   } else if (currentTotal === 21) {
     playerMessage.textContent = "You've got BlackJack!";
     playerWins();
-    hasBlackJack = true;
-    isAlive = false;
-  } else if (currentTotal < 21 && playerArr.length == 5) {
+  } else if (currentTotal < 21 && playerArr.length > 4) {
     playerWins();
   } else {
     playerMessage.textContent = "Sorry! You've bust..";
     playerLoses();
-    isAlive = false;
   }
 }
 
