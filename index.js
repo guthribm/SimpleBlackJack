@@ -95,6 +95,7 @@ function dealSingleCard() {
 function startGame() {
   getDeckId();
   player.chips = 250;
+  winsInARow = 0;
   document.getElementById("main").style.display = "grid";
   renderGame(playerCardsArray, dealerCardsArray);
 }
