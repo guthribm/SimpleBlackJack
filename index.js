@@ -8,6 +8,7 @@ let player = {
 let deckId;
 let newDeck = document.getElementById("new-deck");
 let dealCard = document.getElementById("draw-card");
+let chipAmount = document.getElementById("chip-amount");
 let dealerCards = document.getElementById("dealer-cards");
 let dealerCardsArray = [];
 let playerCards = document.getElementById("player-cards");
@@ -23,6 +24,7 @@ let confirmBtn = document.getElementById("confirm");
 let newGameBtn = document.getElementById("nav-btn");
 let overlay = document.getElementById("overlay");
 
+let winsInARow = 0;
 let playerSum = 0;
 let dealerSum = 0;
 let hasBlackJack = false;
@@ -39,7 +41,7 @@ function gameOver() {
 
 // Changes the chip amount and checks if player is out of chips or not
 function updateChips() {
-  playerName.textContent = `CHIPS: $${player.chips}`;
+  chipAmount.textContent = `$${player.chips}`;
   if (player.chips <= 0) {
     gameOver();
   }
@@ -176,14 +178,33 @@ function playerDraw() {
   document.getElementById("overlay").style.display = "flex";
 }
 
+function randomCompliment() {
+  let compliments = [
+    "Awesome!",
+    "Great job!",
+    "Way to go!",
+    "On fire!",
+    "Cheat Mode is ON!",
+    "You are KILLING it!",
+    "ANOTHER win!?",
+  ];
+  let compIndex = Math.floor(Math.random() * compliments.length);
+  return compliments[compIndex];
+}
+
 // Displays a modal message for a win and adds chips. Turnary to check display custom messages
 // for blackJack
 function playerWins() {
-  modal.innerHTML = `<h2 id="modal-message">${
+  winsInARow++;
+  modal.innerHTML = `<h2 id='modal-message'>${
     getPlayerSum() === 21
-      ? "You got a <span class='got-blackjack'>BlackJack!</span>\n"
+      ? "You got a <span class='got-blackjack'>BlackJack! </span>"
       : ""
-  }You Win! 🙂</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
+  }You Win! 🙂</h2><h2>${
+    winsInARow > 1
+      ? `${randomCompliment()} That is <span id='in-a-row'>${winsInARow} wins in a row!</span>`
+      : ""
+  }</h2><br><button onclick='confirmHandler()' class='btn' id='confirm'>OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
   player.chips += 50;
@@ -192,6 +213,7 @@ function playerWins() {
 
 // Displays a modal message for a loss and removes chips.
 function playerLoses() {
+  winsInARow = 0;
   modal.innerHTML = `<h2 id="modal-message">You Lose 😥</h2><button onclick="confirmHandler()" class="btn" id="confirm">OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = "Dealer";
@@ -205,6 +227,8 @@ function checkWinner() {
   let plyr = getPlayerSum();
 
   if (dlr > 21) {
+    playerWins();
+  } else if (plyr < 21 && playerCardsArray.length > 4) {
     playerWins();
   } else if (dlr === 21) {
     playerLoses();
@@ -256,8 +280,13 @@ function cancelNewGame() {
 
 // Displays message asking if the player wants to reset and start a new game or not
 function confirmNewGame() {
-  modal.innerHTML = `<h2 id="modal-message">Would you like to start a new game?</h2><div class="buttons"><button onclick="startNewGame()" class="btn" id="confirm">YES</button><button class="btn" onclick="cancelNewGame()";">NO</button></div>`;
+  modal.innerHTML = `<h2 id="modal-message">Would you like to start a new game?</h2><div class="buttons"><button onclick="startNewGame()" class="btn" id="confirm">YES</button><button class="btn" onclick="cancelNewGame()">NO</button></div>`;
   overlay.style.display = "flex";
+}
+
+function clickEffect() {
+  dealCard.classList.toggle("clicked");
+  console.log("button was clicked ");
 }
 
 // Clears the modal overlay, clears the table and both arrays, deals starting cards

@@ -2,8 +2,11 @@
   --main-font: "Roboto", sans-serif;
   --dark-primary: #232931;
   --dark-secondary: #393e46;
-  --accent: #4ecca3;
+  --accent-bonus: #4ecca3;
   --primary-light: #eeeeee;
+  --stay: #ff5347;
+  --draw: #77ff54;
+  --accent: #edff61;
 }
 
 *,
@@ -39,6 +42,7 @@ body {
 main {
   background-color: var(--dark-primary);
   margin: 0 auto;
+  padding: 1rem;
   display: grid;
   grid-template-rows: 15% 60% 25%;
   grid-template-areas: "nav" "text" "buttons";
@@ -95,8 +99,14 @@ img {
   text-transform: uppercase;
 }
 
+#in-a-row {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+}
+
 .got-blackjack {
   color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
 }
 
 #new-deck {
@@ -151,7 +161,12 @@ nav {
 }
 
 #player-name {
+  color: #768030;
+}
+
+#chip-amount {
   color: var(--accent);
+  text-shadow: 3px 0px #768030;
 }
 
 /* #############  Middle Section  ############# */
@@ -263,6 +278,20 @@ nav {
   width: 80%;
 }
 
+@keyframes btn-click {
+  0% {
+    box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 1);
+  }
+
+  100% {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0);
+  }
+}
+
+.clicked {
+  animation: btn-click 1s;
+}
+
 #player-message {
   grid-area: message;
   padding: 0.5rem 1rem;
@@ -270,7 +299,7 @@ nav {
   text-align: center;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
   border: 2px solid var(--primary-light);
-  border-radius: 12px;
+  border-radius: 6px;
   margin: 1rem auto;
   width: 90%;
   justify-content: center;
@@ -280,34 +309,33 @@ nav {
 
 #draw-card {
   grid-area: button1;
-  background: var(--accent);
+  background: var(--draw);
   max-width: 150px;
   color: var(--dark-primary);
-  border-color: var(--primary-light);
+  border-color: var(--dark-primary);
 }
 
-#draw-card:hover,
-#draw-card:focus {
-  background: #00c45f;
-  color: #024d26;
-  border-color: #024d26;
+#draw-card:hover {
+  animation: btn-click 1s;
+  background: var(--dark-primary);
+  color: var(--draw);
+  border-color: var(--draw);
   box-shadow: 0px 0px #000;
 }
 
 #stay-btn {
   grid-area: button2;
-  /* visibility: hidden; */
-  background: var(--primary-light);
+  background: var(--stay);
   max-width: 150px;
-  border-color: #c42918;
-  color: #c42918;
+  border-color: var(--stay);
+  color: var(--primary-light);
 }
 
-#stay-btn:hover,
-#stay-btn:focus {
-  background: #64150d;
-  color: #f58679;
-  border-color: #f58679;
+#stay-btn:hover {
+  animation: btn-click 1s;
+  background: var(--dark-secondary);
+  color: var(--stay);
+  border-color: var(--stay);
   box-shadow: 0px 0px #999;
 }
 
@@ -328,6 +356,7 @@ nav {
   justify-content: center;
   align-items: center;
   box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.25);
+  transition: 0.35s;
 }
 
 .bottom-btn {
@@ -346,6 +375,7 @@ nav {
 
   main {
     height: 100vh;
+    padding: 0;
   }
 
   /* .card-image {
