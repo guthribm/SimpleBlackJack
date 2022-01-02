@@ -112,7 +112,7 @@ function getFinishedTime(){
 function startGame() {
   getDeckId();  
   roundStart = Date.now()
-  player.chips = 450;
+  player.chips = 250;
   winsInARow = 0;
   document.getElementById("main").style.display = "grid";
   renderGame(playerCardsArray, dealerCardsArray);
@@ -259,7 +259,7 @@ function playerWins() {
   }</h2><br><button onclick='confirmHandler()' class='btn' id='confirm'>OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
-  if(player.chips >= 550){
+  if(player.chips >= 1000){
     gameWon()
   }
   
