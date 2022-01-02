@@ -179,16 +179,33 @@ function playerDraw() {
   document.getElementById("overlay").style.display = "flex";
 }
 
-function randomCompliment() {
-  let compliments = [
-    "Awesome!",
+function randomCompliment(numOfWins) {
+
+  let compliments;
+  let bottomLevel = [
+    "Yay!",
     "Great job!",
     "Way to go!",
-    "On fire!",
-    "Cheat Mode is ON!",
+    
+  ]
+  let middleLevel = [
+    "Outstanding!!",
     "You are KILLING it!",
-    "ANOTHER win!?",
+    "ANOTHER win!? You're heating up!",
+    "You are in the ZONE!",
+  ]
+  let topLevel = [
+    "DOUBLE POINTS!!!"
   ];
+
+  if (numOfWins <= 2){
+    compliments = bottomLevel
+  } else if (numOfWins > 2 && numOfWins < 5){
+    compliments = middleLevel
+  } else {
+    compliments = topLevel
+  }
+
   let compIndex = Math.floor(Math.random() * compliments.length);
   return compliments[compIndex];
 }
@@ -197,19 +214,20 @@ function randomCompliment() {
 // for blackJack
 function playerWins() {
   winsInARow++;
+  winsInARow > 4 ? player.chips += 100 : player.chips += 50;
+  updateChips();
   modal.innerHTML = `<h2 id='modal-message'>${
     getPlayerSum() === 21
       ? "You got a <span class='got-blackjack'>BlackJack! </span>"
       : ""
   }You Win! 🙂</h2><h2>${
     winsInARow > 1
-      ? `${randomCompliment()} That is <span id='in-a-row'>${winsInARow} wins in a row!</span>`
+      ? `${randomCompliment(winsInARow)} That is <span id='in-a-row'>${winsInARow} wins in a row!</span>`
       : ""
   }</h2><br><button onclick='confirmHandler()' class='btn' id='confirm'>OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
-  player.chips += 50;
-  updateChips();
+  
 }
 
 // Displays a modal message for a loss and removes chips.
