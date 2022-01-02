@@ -101,7 +101,7 @@ function getFinishedTime() {
     seconds = time % 60;
     return `${Math.floor(minutes)}:${
       seconds < 10 ? "0" + seconds.toFixed(2) : seconds.toFixed(2)
-    }`;
+    } minutes`;
   } else {
     return `${time} seconds`;
   }
