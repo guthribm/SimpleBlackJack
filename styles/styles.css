@@ -317,7 +317,6 @@ nav {
 /* #############  Buttons Section  ############# */
 
 #buttons-container {
-  grid-area: buttons;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -347,7 +346,6 @@ nav {
 }
 
 #player-message {
-  grid-area: message;
   padding: 0.5rem 1rem;
   background: var(--dark-secondary);
   text-align: center;
@@ -378,7 +376,6 @@ nav {
 }
 
 #stay-btn {
-  grid-area: button2;
   background: var(--stay);
   max-width: 150px;
   border-color: var(--stay);

@@ -113,7 +113,7 @@ function startGame() {
   roundStart = Date.now();
   player.chips = 250;
   winsInARow = 0;
-  document.getElementById("main").style.display = "grid";
+  document.getElementById("main").style.display = "flex";
   renderGame(playerCardsArray, dealerCardsArray);
 }
 
