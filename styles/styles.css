@@ -1,5 +1,6 @@
 :root {
-  --main-font: "Roboto", sans-serif;
+  --main-font: "Ubuntu", sans-serif;
+  --title-font: "Cinzel", serif;
   --dark-primary: #232931;
   --dark-secondary: #393e46;
   --accent-bonus: #4ecca3;
@@ -7,6 +8,11 @@
   --stay: #ff5347;
   --draw: #77ff54;
   --accent: #edff61;
+  --title: #7abbff;
+  --computer-color: #b33294;
+  --computer-color-light: #ff54d7;
+  --player-color: #5956b3;
+  --player-color-light: #7afffd;
 }
 
 *,
@@ -16,13 +22,22 @@
   /* border: 1px solid red; */
 }
 
+html {
+  font-size: 16px;
+}
+
 html,
 body,
+h1,
 h2,
 h3 {
   margin: 0;
   padding: 0;
   font-family: var(--main-font);
+}
+
+h1 {
+  font-size: 1.75rem;
 }
 
 h3 {
@@ -42,18 +57,16 @@ body {
 main {
   background-color: var(--dark-primary);
   margin: 0 auto;
-  padding: 1rem;
-  display: grid;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   min-height: 500px;
-  grid-template-rows: 15% 60% 25%;
-  grid-template-areas: "nav" "text" "buttons";
   box-shadow: 0px 0px 8px 3px rgba(100, 100, 100, 0.6),
     0px 0px 10px 5px rgba(100, 100, 100, 0.3);
 }
-
-/* #main {
-  display: none;
-} */
 
 img {
   max-width: 100%;
@@ -63,6 +76,16 @@ img {
   right: 1.5rem;
   display: flex;
   z-index: 3;
+}
+
+li {
+  text-align: left;
+  margin-top: 1rem;
+  font-weight: bolder;
+}
+
+mark {
+  background-color: var(--accent);
 }
 
 /* #############  Modal  ############# */
@@ -88,7 +111,7 @@ img {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  background-color: rgba(60, 60, 60, .9);
+  background-color: rgba(60, 60, 60, 0.9);
   padding: 1rem;
   border-radius: 12px;
   min-width: 200px;
@@ -96,8 +119,32 @@ img {
   text-align: center;
 }
 
+#modal p {
+  margin: 0;
+  padding: 0;
+}
+
 #modal-message {
   margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.game-title {
+  font-family: var(--title-font);
+  color: var(--title);
+}
+
+.game-subtitle {
+  font-family: var(--title-font);
+  font-style: italic;
+}
+
+.rules {
+  margin: 2rem auto;
+  border-radius: 12px;
+  background: var(--primary-light);
+  color: var(--dark-primary);
+  padding: 1rem;
   text-transform: uppercase;
 }
 
@@ -133,7 +180,6 @@ img {
 /* #############  NavBar  ############# */
 
 nav {
-  grid-area: nav;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -141,7 +187,6 @@ nav {
   height: 60px;
   background-color: var(--dark-secondary);
   padding: 1rem 0.5rem;
-  margin-bottom: 1rem;
 }
 
 #nav-btn {
@@ -167,20 +212,19 @@ nav {
 }
 
 #player-name {
-  background: white;
-  color:rgba(60, 60, 60, 1);
-  padding: .25rem .5rem;
-  font-size: 1.25rem;
-  margin-right: 1rem;
+  background: var(--primary-light);
+  color: rgba(60, 60, 60, 1);
+  padding: 0.25rem 0.5rem;
+  font-size: 1.45rem;
+  margin: 0 0.5rem;
   font-weight: bolder;
   display: flex;
   text-align: right;
 }
 
 #chip-amount {
-  color:rgba(60, 60, 60, 1);
-  padding-left: .5rem;
-  
+  color: rgba(60, 60, 60, 1);
+  padding-left: 0.5rem;
 }
 
 /* #############  Middle Section  ############# */
@@ -194,7 +238,6 @@ nav {
 }
 
 #middle-section {
-  grid-area: text;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
@@ -203,6 +246,7 @@ nav {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -221,11 +265,12 @@ nav {
 
 .card-sum {
   padding: 0.5rem;
-  color: var(--primary-light);
+  text-transform: uppercase;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   height: 40%;
   display: inline-block;
+  font-weight: bolder;
 }
 
 /* #############  Dealer  ############# */
@@ -236,14 +281,15 @@ nav {
 }
 
 #dealer-sum {
-  background: #c42918;
+  background: var(--dark-secondary);
+  color: var(--primary-light);
   text-align: right;
   padding-left: 2rem;
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.25);
 }
 
 #dealer-cards .card-image {
-  box-shadow: -5px 0px 3px rgba(196, 41, 24, 0.5);
+  box-shadow: -5px 0px 3px rgba(35, 41, 49, 0.5);
   border-radius: 5px;
 }
 
@@ -256,15 +302,16 @@ nav {
 }
 
 #player-sum {
-  background: #0e5dc4;
+  background: var(--primary-light);
   text-align: left;
   padding-right: 2rem;
   box-shadow: 0px -5px 6px rgba(0, 0, 0, 0.25);
+  color: var(--dark-primary);
 }
 
 #player-cards .card-image {
   border-radius: 5px;
-  box-shadow: -5px 0px 3px rgba(14, 93, 196, 0.5);
+  box-shadow: -5px 0px 3px rgba(35, 41, 49, 0.5);
 }
 
 /* #############  Buttons Section  ############# */
@@ -276,6 +323,7 @@ nav {
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+  margin: 0 auto 1rem;
 }
 
 .buttons {
@@ -357,14 +405,13 @@ nav {
   font-family: var(--main-font);
   text-transform: uppercase;
   font-weight: bolder;
-  font-size: 1.25rem;
+  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.25);
   transition: 0.35s;
 }
-
 
 .bottom-btn {
   width: 40vw;
@@ -375,26 +422,44 @@ nav {
 
 /* #############  Media Queries Mobile View  ############# */
 
-@media (max-width: 450px) {
+@media (min-width: 600px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
+  }
+
+  body {
+    background-color: var(--dark-secondary);
   }
 
   main {
-    height: 100vh;
-    padding: 0;
+    padding: 1rem;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  /* .card-image {
-    max-width: 45%;
-  } */
+  .bottom-btn {
+    width: 100%;
+    height: 70px;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .card-sum {
+    font-size: 1.5rem;
+  }
 
   #player-message {
-    font-size: 1.25rem;
-    margin: 0 auto;
+    font-size: 1.5rem;
   }
 
-  .btn {
-    font-size: 1rem;
+  #buttons-container {
+    margin: 2rem auto;
+  }
+
+  .card-image {
+    width: 110px;
   }
 }

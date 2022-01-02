@@ -8,20 +8,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Ubuntu:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <!-- #############  CSS Styles  ############# -->
     <link rel="stylesheet" href="styles/styles.css" />
-    <title>Simple BlackJack Game</title>
+    <title>A Simple BlackJack Game</title>
   </head>
 
   <body id="root">
     <div id="overlay">
       <div id="modal">
-        <h1>Welcome to a Simple BlackJack Game!</h1>
-        <br />
-        <h2 id="modal-message">Would you like to play?</h2>
+        <h1>
+          Welcome to <span class="game-title">A Simple BlackJack Game.</span>
+        </h1>
+        <div class="rules">
+          <h3>The rules are <span class="game-subtitle">Simple</span>:</h3>
+          <ul>
+            <li>Get to <mark>$1000</mark> as quickly as possible.</li>
+            <li>Streaks of 5 wins or more earn <mark>DOUBLE POINTS</mark>.</li>
+          </ul>
+        </div>
+
+        <h3 id="modal-message">Would you like to play?</h3>
         <button onclick="startGame()" class="btn" id="new-deck">
           Start Game
         </button>
