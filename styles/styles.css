@@ -51,7 +51,7 @@ body {
   background-color: var(--primary-light);
   padding: 0;
   margin: 0;
-  /* height: 100vh; */
+  height: 100vh;
 }
 
 main {
@@ -102,7 +102,7 @@ mark {
   bottom: 0;
   right: 0;
   color: var(--primary-light);
-  background-color: rgba(35, 41, 49, 0.3);
+  background-color: rgba(35, 41, 49, 0.6);
   z-index: 100;
   padding: 1rem;
 }
