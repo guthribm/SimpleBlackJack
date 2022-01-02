@@ -101,7 +101,7 @@ function getFinishedTime() {
     seconds = time % 60;
     return `${Math.floor(minutes)}:${
       seconds < 10 ? "0" + seconds.toFixed(2) : seconds.toFixed(2)
-    } minutes`;
+    }`;
   } else {
     return `${time} seconds`;
   }
@@ -197,7 +197,7 @@ function playerDraw() {
 }
 
 function gameWon() {
-  modal.innerHTML = `<h2 id="modal-message">Congratulations, you reached <span class="got-blackjack">$1000!</span></h2><h3>TOTAL TIME:</h3><h3 id="time"><span class="got-blackjack">${getFinishedTime()}</span></h3><button onclick="startNewGame()" class="btn" id="confirm">OK</button>`;
+  modal.innerHTML = `<h2 id="modal-message">Congratulations, you reached <span class="got-blackjack">$1000!</span></h2><h3>TOTAL TIME:</h3><h3 id="time"><span class="got-blackjack">${getFinishedTime()}</span></h3><button onclick="startNewGame()" class="btn" id="confirm">NEW GAME</button>`;
   document.getElementById("overlay").style.display = "flex";
   console.log(`Goal reached, finished time: ${getFinishedTime()}`);
 }
@@ -230,9 +230,6 @@ function randomCompliment(numOfWins) {
 function playerWins() {
   winsInARow++;
   winsInARow > 4 ? (player.chips += 100) : (player.chips += 50);
-
-  updateChips();
-
   modal.innerHTML = `<h2 id='modal-message'>${
     getPlayerSum() === 21
       ? "You got a <span class='got-blackjack'>BlackJack! </span>"
@@ -245,6 +242,7 @@ function playerWins() {
       : ""
   }</h2><br><button onclick='confirmHandler()' class='btn' id='confirm'>OK</button>`;
   document.getElementById("overlay").style.display = "flex";
+  updateChips();
   winner = player.name;
   if (player.chips >= 1000) {
     gameWon();
@@ -268,8 +266,8 @@ function checkWinner() {
 
   if (dlr > 21) {
     playerWins();
-  } else if (plyr < 21 && playerCardsArray.length > 4) {
-    playerWins();
+    // } else if (plyr < 21 && playerCardsArray.length > 4) {
+    //   playerWins();
   } else if (dlr === 21) {
     playerLoses();
   } else if (dlr === plyr) {
@@ -337,7 +335,7 @@ function confirmHandler() {
   dealStartingCards();
 }
 
-// ------------------  MAIN GAME LOGIC  ---------------------
+// ------------------  MAIN GAME RENDER FUNCTION  ---------------------
 function renderGame(playerArr, dealerArr) {
   playerCards.innerHTML = "";
   dealerCards.innerHTML = "";
