@@ -170,7 +170,7 @@ nav {
   background: white;
   color:rgba(60, 60, 60, 1);
   padding: .25rem .5rem;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-right: 1rem;
   font-weight: bolder;
   display: flex;
@@ -388,10 +388,6 @@ nav {
   /* .card-image {
     max-width: 45%;
   } */
-
-  #player-name {
-    font-size: 1.5rem;
-  }
 
   #player-message {
     font-size: 1.25rem;
