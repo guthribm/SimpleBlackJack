@@ -31,6 +31,9 @@ let hasBlackJack = false;
 let isAlive = false;
 let message = "";
 let winner = "";
+let roundStart;
+
+
 
 // Brings up overlay with a message and on the button click starts a new game
 function gameOver() {
@@ -91,10 +94,25 @@ function dealSingleCard() {
     });
 }
 
+function getFinishedTime(){
+  let seconds = 0;
+  let minutes = 0;
+  let time = (Date.now() - roundStart) / 1000 
+  if (time > 60){
+    minutes = time / 60;
+    seconds = time % 60;
+    return `${Math.floor(minutes)}:${seconds < 10 ? "0" + seconds.toFixed(2) : seconds.toFixed(2)} minutes`
+  } else {
+    return `${time} seconds`
+  }
+
+}
+
 // Gets a new deck, resets player chips, renders the table and cards
 function startGame() {
-  getDeckId();
-  player.chips = 250;
+  getDeckId();  
+  roundStart = Date.now()
+  player.chips = 450;
   winsInARow = 0;
   document.getElementById("main").style.display = "grid";
   renderGame(playerCardsArray, dealerCardsArray);
@@ -119,6 +137,8 @@ function checkSuits(value) {
   }
   return cardValue;
 }
+
+
 
 // Takes the value from the API response and converts it to a number. So the tricky part
 // is the Ace, which can be different values depending on the rest of the cards in the
@@ -179,8 +199,18 @@ function playerDraw() {
   document.getElementById("overlay").style.display = "flex";
 }
 
-function randomCompliment(numOfWins) {
+function confirmGameOver(){
+  roundStart = 0;
+  confirmNewGame()  
+}
 
+function gameWon(){
+  modal.innerHTML = `<h2 id="modal-message">Congratulations, you reached <span class="got-blackjack">$1000!</span></h2><h3>TOTAL TIME:</h3><h3 id="time"><span class="got-blackjack">${getFinishedTime()}</span></h3><button onclick="confirmGameOver()" class="btn" id="confirm">OK</button>`;
+  document.getElementById("overlay").style.display = "flex";  
+  console.log(`Goal reached, finished time: ${getFinishedTime()}`)
+}
+
+function randomCompliment(numOfWins) {
   let compliments;
   let bottomLevel = [
     "Yay!",
@@ -215,7 +245,9 @@ function randomCompliment(numOfWins) {
 function playerWins() {
   winsInARow++;
   winsInARow > 4 ? player.chips += 100 : player.chips += 50;
+  
   updateChips();
+ 
   modal.innerHTML = `<h2 id='modal-message'>${
     getPlayerSum() === 21
       ? "You got a <span class='got-blackjack'>BlackJack! </span>"
@@ -227,6 +259,9 @@ function playerWins() {
   }</h2><br><button onclick='confirmHandler()' class='btn' id='confirm'>OK</button>`;
   document.getElementById("overlay").style.display = "flex";
   winner = player.name;
+  if(player.chips >= 550){
+    gameWon()
+  }
   
 }
 
