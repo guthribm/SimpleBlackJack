@@ -204,19 +204,12 @@ function gameWon() {
 
 function randomCompliment(numOfWins) {
   let compliments;
-  let bottomLevel = ["Yay!", "Great job!", "Way to go!"];
-  let middleLevel = [
-    "Outstanding!!",
-    "You are KILLING it!",
-    "ANOTHER win!? You're heating up!",
-    "You are in the ZONE!",
-  ];
+  let bottomLevel = ["Outstanding!!", "Great job!", "Way to go!"];
+
   let topLevel = ["DOUBLE POINTS!!!"];
 
   if (numOfWins <= 2) {
     compliments = bottomLevel;
-  } else if (numOfWins > 2 && numOfWins < 5) {
-    compliments = middleLevel;
   } else {
     compliments = topLevel;
   }
@@ -229,7 +222,7 @@ function randomCompliment(numOfWins) {
 // for blackJack
 function playerWins() {
   winsInARow++;
-  winsInARow > 4 ? (player.chips += 100) : (player.chips += 50);
+  winsInARow > 2 ? (player.chips += 100) : (player.chips += 50);
   modal.innerHTML = `<h2 id='modal-message'>${
     getPlayerSum() === 21
       ? "You got a <span class='got-blackjack'>BlackJack! </span>"
